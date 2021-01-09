@@ -1,7 +1,71 @@
-.attribution { 
-    font-size: 11px; text-align: center; 
+/* Color values used */
+:root {
+    --very-dark-gray: hsl(0, 0%, 17%);
+    --dark-gray: hsl(0, 0%, 59%);
 }
 
-.attribution a { 
-    color: hsl(228, 45%, 44%); 
+body {
+    margin: 0;
+    font-family: 'Rubik', sans-serif;
+}
+
+.bg-pattern {
+    width: 100vw;
+}
+
+.search-container {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+.search-box {
+    width: 25%;
+    height: 40px;
+    margin-top: -298px;
+    border-radius: 8px;
+    outline: none;
+    cursor: pointer;
+}
+
+.btn-search {
+    width: 3%;
+    height: 46px;
+    margin-top: -298px;
+    border-radius: 8px;
+    background-color: var(--very-dark-gray);
+    cursor: pointer;
+}
+
+.text-title {
+    text-align: center;
+    margin-top: -228px;
+    color: white;
+    font-size: 24px;
+    font-weight: 400;
+}
+
+::placeholder {
+    color: var(--dark-gray);
+}
+
+input[type=text]
+{
+    font-family: 'Rubik', sans-serif;
+    color: black;
+    padding-left: 16px;
+    font-size: 14px;
+}
+
+#mapid {
+    display: flex;
+    flex-flow: column; 
+    flex: 1;
+    height: 100vh;
+    position: relative;
+    margin-top: 196px; 
 }
