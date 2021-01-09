@@ -2,17 +2,23 @@ var apiKey = 'at_UVRXJWzj8rBX6SCHscWKiI1Q0nkOP';
 var apiPath = 'https://geo.ipify.org/api/v1?';
 var mapboxToken = 'pk.eyJ1IjoiYW5kcmV0b2YiLCJhIjoiY2tqbHJibWwyNjVocTJybGczYTY2YzVqdSJ9.bZrSA1uiEGt2BxrMkOMVKw';
 
-var inputTest; 
+var ipAddressElement = document.getElementById('ipAddress');
+var locationElement = document.getElementById('location');
+var timezoneElement = document.getElementById('timezone');
+var ispElement = document.getElementById('isp');
+
 var retrievedData;
 var searchInputElement = document.getElementById('search-input');
-searchInputElement.value = '83.137.6.170';
-var searchInput;
+
+var searchInput = '83.137.6.170';
 var searchButton = document.getElementById('button-search').addEventListener('click', () => {
     searchInput = searchInputElement.value;
     searchIpUser();
 });
 
-var locationIp;
+$(window).on('load', () => {
+    searchIpUser();
+});
 
 function searchIpUser() {
     var url = apiPath + 'apiKey=' + apiKey + '&ipAddress=' + searchInput;
@@ -20,16 +26,21 @@ function searchIpUser() {
     var request = new XMLHttpRequest();
     request.open('GET', url);
     request.onload = () => {
-    // console.log(request.responseText);
     retrievedData = JSON.parse(request.responseText);
-    console.log(retrievedData);
-    console.log(retrievedData.location.city);
 
     locationIp = new L.LatLng(retrievedData.location.lat, retrievedData.location.lng);
-    console.log(locationIp);
-    mymap.flyTo(locationIp, 14);
+    
+    mymap.flyTo(locationIp, 14, {animate:  true, duration: 1});
     var marker = L.marker([retrievedData.location.lat, retrievedData.location.lng]).addTo(mymap);
+
+    ipAddressElement.innerHTML = retrievedData.ip;
+    locationElement.innerHTML = retrievedData.location.city + ', ' 
+        + retrievedData.location.country 
+        + retrievedData.location.postalCode;
+    timezoneElement.innerHTML = 'UTC ' + retrievedData.location.timezone;
+    ispElement.innerHTML = retrievedData.isp;
     };
+    
     request.send();
 
     return url;
@@ -40,12 +51,11 @@ $(document).on("focus" , ".search-box" , function () {
     $(this).removeAttr('placeholder');
 
 });
-
+$(document).on('resize',  () => { mymap.flyTo(locationIp, 14);})
 $(document).on("focusout" , ".search-box" , function () {
 
     if($(this).val() == ''){
         $(this).attr('placeholder' , "Search for any IP address or domain");
-        //$(this).attr('placeholder').css({'padding-left': ''});
     }
 
 });
